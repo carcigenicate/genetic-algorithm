@@ -54,7 +54,7 @@
 
 (def fitness-func (ff/fit-func true #(apply + %)))
 
-(def test-settings (gs/->Settings 0.5 0.4 (set (range -1000 1000))
+(def test-settings (gs/->Settings 0.5 0.4 (set (range -10 10))
                                   0.2 > 1000 2 lafflc/gen-fit-func))
 
 (def test-pop (jp/random-population (:pop-size test-settings)

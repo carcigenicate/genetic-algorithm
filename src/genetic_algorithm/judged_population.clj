@@ -7,9 +7,9 @@
 (defn unjudged-pop [pop]
   (mapv jg/unjudged-genes pop))
 
-(defn random-population [pop-size sequence-length gene-set rand-gen]
+(defn random-population [pop-size sequence-length gene-f rand-gen]
   (unjudged-pop
-    (repeatedly pop-size #(gag/random-seqeunce-of gene-set sequence-length rand-gen))))
+    (repeatedly pop-size #(gag/random-seqeunce-of gene-f sequence-length))))
 
 (defn produce-raw-child [j-pop cross-chance rand-gen]
   (gag/randomly-cross (:genes (g/random-from-collection j-pop rand-gen))
@@ -17,8 +17,8 @@
                       cross-chance
                       rand-gen))
 
-(defn maybe-mutate-children [raw-children gene-set mutate-chance rand-gen]
-  (mapv #(gag/maybe-mutate-random % gene-set mutate-chance rand-gen) raw-children))
+(defn maybe-mutate-children [raw-children gene-f mutate-chance rand-gen]
+  (mapv #(gag/maybe-mutate-random % gene-f mutate-chance rand-gen) raw-children))
 
 (defn- thin-judged-population
   "Returns a sorted population with the least fit sequences removed.
@@ -33,21 +33,21 @@
 (defn- judge-population [pop fitness-f]
   (mapv #(jg/maybe-judge % fitness-f) pop))
 
-(defn- repopulate [sorted-j-pop pop-size gene-set cross-chance mutate-chance rand-gen]
+(defn- repopulate [sorted-j-pop pop-size gene-f cross-chance mutate-chance rand-gen]
   (let [n-needed (- pop-size (count sorted-j-pop))
         raw-children (repeatedly n-needed
                                  #(produce-raw-child sorted-j-pop cross-chance rand-gen))]
     (into sorted-j-pop
           (unjudged-pop
-            (maybe-mutate-children raw-children gene-set mutate-chance rand-gen)))))
+            (maybe-mutate-children raw-children gene-f mutate-chance rand-gen)))))
 
 (defn advance [j-pop settings rand-gen]
   (let [{:keys [fitness-f sort-f keep-perc pop-size
-                cross-chance gene-set mutate-chance]} settings]
+                cross-chance gene-f mutate-chance]} settings]
     (-> j-pop
         (judge-population fitness-f)
         (thin-judged-population sort-f keep-perc)
-        (repopulate pop-size gene-set cross-chance mutate-chance rand-gen))))
+        (repopulate pop-size gene-f cross-chance mutate-chance rand-gen))))
 
 (defn advance-by [population settings iterations rand-gen]
   (nth

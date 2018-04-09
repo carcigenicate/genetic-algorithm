@@ -5,4 +5,4 @@
 
 ; TODO: Gene-set should be a producer-f. (set (range 1e6)) takes forever.
 
-(defrecord Settings [mutate-chance cross-chance gene-set keep-perc sort-f pop-size sequence-length fitness-f])
+(defrecord Settings [mutate-chance cross-chance gene-f keep-perc sort-f pop-size sequence-length fitness-f])

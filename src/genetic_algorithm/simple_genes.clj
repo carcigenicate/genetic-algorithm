@@ -3,14 +3,11 @@
 
             [genetic-algorithm.helpers :as gah]))
 
-(defn random-gene [gene-set rand-gen]
-  (g/random-from-collection gene-set rand-gen))
-
 (defn sequence-of [filler seq-length]
   (vec (repeat seq-length filler)))
 
-(defn random-seqeunce-of [gene-set seq-length rand-gen]
-  (vec (repeatedly seq-length #(random-gene gene-set rand-gen))))
+(defn random-seqeunce-of [gene-f seq-length]
+  (vec (repeatedly seq-length gene-f)))
 
 (defn mutate-random [raw-genes gene-set rand-gen]
   (assoc raw-genes (gah/random-index raw-genes rand-gen)
