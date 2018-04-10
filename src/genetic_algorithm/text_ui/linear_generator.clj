@@ -3,12 +3,13 @@
 (defrecord Linear-Problem [profit-f constraint-f])
 
 (defn range-error
+  "Returns how out of bounds n is from [c-min c-max]. Bounds are inclusive.
+c-min defaults to 0 if not supplied."
   ([c-min n c-max]
-   (if (<= c-min n c-max)
-     0
-     (if (< n c-min)
-       (- c-min n)
-       (- n c-max))))
+   (cond
+     (<= c-min n c-max) 0
+     (> c-min n) (- c-min n)
+     :else (- n c-max)))
 
   ([n c-max]
    (range-error 0 n c-max)))
@@ -24,9 +25,9 @@
        (apply +)))
 
 (defn evaluate-problem
-  "Generate a fitness value based on the given profit and constraint functions.
+  "Returns a fitness value based on the profit and constraint functions, and the var values via var-map.
   Constraint-mult multiplies the constarint error to make up for the profit function overcoming constraint error.
-  Should be greater than the largest profit multiplier in the profit function."
+   Should be greater than the largest profit multiplier in the profit function."
   [l-prob var-map constraint-mult]
   (let [{:keys [profit-f constraint-f]} l-prob]
     (+ (profit-f var-map)
@@ -56,7 +57,9 @@
 (defn min-number [coll]
   (find-number coll 1 (partial apply min)))
 
-(defn replace-keys-with-call [coll map-sym]
+(defn replace-keys-with-call
+  "Replaces all keywords in the nested coll with (:keyword map-sym)."
+  [coll map-sym]
   (->> coll
        (map (fn [e]
               (cond
@@ -66,7 +69,9 @@
 
        (apply list)))
 
-(defn process-profit-expr [profit-expr map-sym]
+(defn process-profit-expr
+  "Returns a processed profit function from the given profit expression."
+  [profit-expr map-sym]
   `(fn [~map-sym]
      ~(replace-keys-with-call profit-expr map-sym)))
 
@@ -89,7 +94,9 @@
     `(fn [~map-sym]
        (apply total-range-error ~procd))))
 
-(defn- linear-problem-expr [profit-expr constraint-exprs]
+(defn- linear-problem-expr
+  "Returns a expression that evaluates to a Linear-Problem object based on the given profit and constraint expressions."
+  [profit-expr constraint-exprs]
   (let [map-sym (gensym 'lp-obj-for-map)
         prof-f (process-profit-expr profit-expr map-sym)
         cons-f (process-constraint-exprs constraint-exprs map-sym)]
@@ -100,11 +107,19 @@
   "Accepts a gene sequence and a list of keyword vars, and returns a map mapping each gene to a var."
   [genes vars]
   (into {}
-        (map vector vars genes)))
+    (map vector vars genes)))
 
-(defmacro fit-func-for [vars _ profit _ & constraints]
-  (let [profit-error-mult 5 ; How much more significant errors are than profit
-        max-prof-mult (max-number profit)
+(defmacro fit-func-for
+  "Accepts a linear porgramming-like syntax, and evaluates to a profit-seeking fitness function that accepts a vector
+   of genes, and returns the calculated fitness."
+  [vars _ profit _ & constraints]
+  (let [; How much more significant errors are than profit. Arbitrary.
+        profit-error-mult 5
+
+        ; Find the largest number in the profit expression so we can make sure the
+        ; contraint error overcomes any profit from illegal results.
+        ; Assumes only * and + will be used, and use of + and * won't be mixed.
+        max-prof-mult (max-number profit) ; Find the
         error-mult (* profit-error-mult max-prof-mult)
 
         lp (linear-problem-expr profit constraints)]

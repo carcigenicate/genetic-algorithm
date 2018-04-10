@@ -9,9 +9,8 @@
 (defn random-seqeunce-of [gene-f seq-length]
   (vec (repeatedly seq-length gene-f)))
 
-(defn mutate-random [raw-genes gene-set rand-gen]
-  (assoc raw-genes (gah/random-index raw-genes rand-gen)
-               (g/random-from-collection gene-set rand-gen)))
+(defn mutate-random [raw-genes gene-f rand-gen]
+  (assoc raw-genes (gah/random-index raw-genes rand-gen) (gene-f)))
 
 (defn gen-cross-points [seq-length cross-chance rand-gen]
   (filter (fn [_] (g/random-perc cross-chance rand-gen))
@@ -43,8 +42,8 @@
   (let [cross-points (gen-cross-points (count raw-genes) cross-chance rand-gen)]
     (cross raw-genes other-raw-genes cross-points)))
 
-(defn maybe-mutate-random [raw-genes gene-set mutate-chance rand-gen]
+(defn maybe-mutate-random [raw-genes gene-f mutate-chance rand-gen]
   (if (g/random-perc mutate-chance rand-gen)
-    (mutate-random raw-genes gene-set rand-gen)
+    (mutate-random raw-genes gene-f rand-gen)
     raw-genes))
 

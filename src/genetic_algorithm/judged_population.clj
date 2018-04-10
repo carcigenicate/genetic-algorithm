@@ -7,9 +7,13 @@
 (defn unjudged-pop [pop]
   (mapv jg/unjudged-genes pop))
 
-(defn random-population [pop-size sequence-length gene-f rand-gen]
-  (unjudged-pop
-    (repeatedly pop-size #(gag/random-seqeunce-of gene-f sequence-length))))
+(defn population-of
+  ([pop-size sequence-length gene-f]
+   (unjudged-pop
+     (repeatedly pop-size #(gag/random-seqeunce-of gene-f sequence-length))))
+
+  ([{:keys [pop-size gene-f sequence-length] :as settings}]
+   (population-of pop-size sequence-length gene-f)))
 
 (defn produce-raw-child [j-pop cross-chance rand-gen]
   (gag/randomly-cross (:genes (g/random-from-collection j-pop rand-gen))

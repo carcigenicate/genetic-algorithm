@@ -30,3 +30,12 @@ The solution is 100 scientific calculators and 170 graphing calculators"
 ; Maximize = P(rofit)
 ; Minimize = C(ost)
 
+#_
+(->Linear-Problem (fn [vars] ; Profit
+                    (+ (* (:s vars) -2) (* (:g vars) 5)))
+
+                  (fn [vars] ; Constraints
+                    (total-range-error
+                      [100 (:s vars) 200]
+                      [80 (:g vars) 170]
+                      [200 (+ (:s vars) (:g vars))])))

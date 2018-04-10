@@ -5,6 +5,7 @@
             [genetic-algorithm.settings :as gs]
             [helpers.general-helpers :as g]
             [genetic-algorithm.fitness-function :as ff]
+            [genetic-algorithm.gene-f-helpers :as geh]
 
             [genetic-algorithm.test-fit-funcs.linear-rabbits :as lafflr]
             [genetic-algorithm.test-fit-funcs.linear-calculator :as lafflc]))
@@ -52,18 +53,17 @@
   (let [good-args (parse-args args)]
     good-args))
 
-(def fitness-func (ff/fit-func true #(apply + %)))
+(def test-settings (gs/map->Settings {:mutate-chance 0.5
+                                      :cross-chance 0.4
+                                      :gene-f (geh/double-range-gen 0 300 global-rand-gen)
+                                      :keep-perc 0.2
+                                      :sort-f >
+                                      :pop-size 1000
+                                      :sequence-length 2
+                                      :fitness-f lafflc/gen-fit-func}))
 
-(def test-settings (gs/->Settings 0.5 0.4 (set (range -10 10))
-                                  0.2 > 1000 2 lafflc/gen-fit-func))
-
-(def test-pop (jp/random-population (:pop-size test-settings)
-                                    (:sequence-length test-settings)
-                                    (:gene-set test-settings)
-                                    (g/new-rand-gen 99)))
-
-; TODO: CHANGE THE LIST OF POSSIBLE GENES TO A GENERATOR FUNCTION!!!!1!111!!!!!11!!!!!!
+(def test-pop (jp/population-of test-settings))
 
 (defn test-proc []
   (main-procedure test-pop test-settings
-                  50 1e6 1e7 global-rand-gen))
+                  1000 1e6 1e7 global-rand-gen))
