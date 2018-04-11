@@ -10,7 +10,7 @@
             [genetic-algorithm.test-fit-funcs.linear-rabbits :as lafflr]
             [genetic-algorithm.test-fit-funcs.linear-calculator :as lafflc]))
 
-(def global-rand-gen (g/new-rand-gen 99))
+(def global-rand-gen (g/new-rand-gen))
 
 (defn perc [current target]
   (double (/ current target)))
@@ -34,8 +34,9 @@
             (println (str i " " best-fitness " - "
                           (f-perc i-perc) " " (f-perc score-perc) "\n"
                           (format-pop (take 5 evolved)) "\n\n")))
-
-          (recur (inc i) evolved))
+          (if (< best-fitness target-fitness)
+            (recur (inc i) evolved)
+            evolved))
 
         acc-pop))))
 
@@ -53,17 +54,18 @@
   (let [good-args (parse-args args)]
     good-args))
 
-(def test-settings (gs/map->Settings {:mutate-chance 0.5
-                                      :cross-chance 0.4
-                                      :gene-f (geh/double-range-gen 0 300 global-rand-gen)
-                                      :keep-perc 0.2
-                                      :sort-f >
-                                      :pop-size 1000
-                                      :sequence-length 2
-                                      :fitness-f lafflc/gen-fit-func}))
+(def test-settings
+  (gs/map->Settings {:mutate-chance 0.00001
+                     :cross-chance 0.3
+                     :gene-f (geh/long-range-gen 0 300 global-rand-gen)
+                     :keep-perc 0.2
+                     :sort-f >
+                     :pop-size 500
+                     :sequence-length 2
+                     :fitness-f lafflc/gen-fit-func}))
 
 (def test-pop (jp/population-of test-settings))
 
 (defn test-proc []
   (main-procedure test-pop test-settings
-                  1000 1e6 1e7 global-rand-gen))
+                  500 650 5e8 global-rand-gen))
