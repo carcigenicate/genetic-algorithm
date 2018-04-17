@@ -1,7 +1,7 @@
 (ns genetic-algorithm.test-fit-funcs.linear-calculator
   (:require [genetic-algorithm.fitness-function :as ff]
             [genetic-algorithm.test-fit-funcs.helpers :as ffh]
-            [genetic-algorithm.text-ui.linear-generator :as fflg]))
+            [linear-generator.syntax-macro :as fsm]))
 
 "A calculator company produces a scientific calculator and a graphing calculator. Long-term projections indicate an expected demand of at least 100 scientific and 80 graphing calculators each day. Because of limitations on production capacity, no more than 200 scientific and 170 graphing calculators can be made daily. To satisfy a shipping contract, a total of at least 200 calculators much be shipped each day.
 
@@ -21,8 +21,8 @@ The solution is 100 scientific calculators and 170 graphing calculators"
 
 (def fit-func (ff/fit-func true calc-fitness))
 
-(def gen-fit-func (ff/fit-func true (fflg/fit-func-for [:s :g]
-                                                       :maximize (+ (* :s -2) (* :g 5))
+(def gen-fit-func (ff/fit-func true (fsm/fit-func-for [:s :g]
+                                                      :maximize (+ (* :s -2) (* :g 5))
                                                        :subject-to (<= 100 :s 200)
                                                                    (<= 80 :g 170)
                                                                    (<= 200 (+ :s :g) 1e6))))
