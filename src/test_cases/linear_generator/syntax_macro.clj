@@ -1,5 +1,5 @@
-(ns linear-generator.syntax-macro
-  (:require [linear-generator.fit-func-generator :as fg]))
+(ns test-cases.linear-generator.syntax-macro
+  (:require [test-cases.linear-generator.fit-func-generator :as fg]))
 
 ; TODO: Generalize the number? part
 (defn- find-number

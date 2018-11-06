@@ -1,4 +1,4 @@
-(ns fast-tree-transform.test-data)
+(ns irrelevant.fast-tree-transform.test-data)
 
 (def six-hundred-fifty
   {:a {:a 1, :b {:a 1, :b 2, :c 3, :d 4}, :c 3, :d 4}, :b 2, :c 3, :d {:a 1, :b {:a {:a 1, :b 2, :c 3, :d {:a {:a {:a 1, :b 2, :c 3, :d 4}, :b 2, :c 3, :d {:a 1, :b 2, :c 3, :d 4}}, :b {:a {:a 1, :b {:a 1, :b {:a {:a 1, :b 2, :c 3, :d {:a 1, :b 2, :c 3, :d {:a 1, :b 2, :c 3, :d 4}}}, :b 2, :c {:a 1, :b 2, :c 3, :d 4}, :d 4}, :c 3, :d {:a 1, :b 2, :c 3, :d 4}}, :c {:a {:a {:a 1, :b {:a 1, :b {:a 1, :b 2, :c 3, :d 4}, :c 3, :d 4}, :c 3, :d 4}, :b 2, :c 3, :d 4}, :b 2, :c 3, :d 4}, :d 4}, :b {:a 1, :b 2, :c 3, :d 4}, :c 3, :d 4}, :c 3, :d 4}}, :b 2, :c 3, :d {:a 1, :b 2, :c 3, :d {:a 1, :b 2, :c 3, :d 4}}}, :c {:a 1, :b 2, :c 3, :d 4}, :d 4}})

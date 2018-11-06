@@ -1,5 +1,5 @@
-(ns magic-square.ga
-  (:require [magic-square.magic-square :as ms]
+(ns test-cases.magic-square.ga
+  (:require [test-cases.magic-square.magic-square :as ms]
             [genetic-algorithm.gene-f-helpers :as geh]
             [genetic-algorithm.settings :as gs]
             [genetic-algorithm.fitness-function :as ff]

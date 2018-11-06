@@ -1,4 +1,4 @@
-(ns genetic-algorithm.test-fit-funcs.linear-rabbits
+(ns test-cases.linear-generator.test-fit-funcs.linear-rabbits
   (:require [genetic-algorithm.fitness-function :as ff]))
 
 "In order to ensure optimal health (and thus accurate test results), a lab technician needs to feed the rabbits a daily diet containing a minimum of 24 grams (g) of fat, 36 g of carbohydrates, and 4 g of protien. But the rabbits should be fed no more than five ounces of food a day.\nRather than order rabbit food that is custom-blended, it is cheaper to order Food X and Food Y, and blend them for an optimal mix. Food X contains 8 g of fat, 12 g of carbohydrates, and 2 g of protein per ounce, and costs $0.20 per ounce. Food Y contains 12 g of fat, 12 g of carbohydrates, and 1 g of protein per ounce, at a cost of $0.30 per ounce."

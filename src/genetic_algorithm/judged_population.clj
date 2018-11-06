@@ -10,7 +10,7 @@
 (defn population-of
   ([pop-size sequence-length gene-f]
    (unjudged-pop
-     (repeatedly pop-size #(gag/random-seqeunce-of gene-f sequence-length))))
+     (repeatedly pop-size #(gag/sequence-of gene-f sequence-length))))
 
   ([{:keys [pop-size gene-f sequence-length] :as settings}]
    (population-of pop-size sequence-length gene-f)))

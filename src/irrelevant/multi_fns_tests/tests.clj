@@ -1,4 +1,4 @@
-(ns multi-fns-tests.tests
+(ns irrelevant.multi-fns-tests.tests
   (:require [clojure.set :as set]))
 
 (defn common-type [coll]

@@ -1,6 +1,6 @@
-(ns fast-tree-transform.fast-tree-transform
-  (:require [fast-tree-transform.test-data :as td]
-            [fast-tree-transform.test-data-gen :as tdg]
+(ns irrelevant.fast-tree-transform.fast-tree-transform
+  (:require [irrelevant.fast-tree-transform.test-data :as td]
+            [irrelevant.fast-tree-transform.test-data-gen :as tdg]
 
             [clojure.walk :as w]
 

@@ -1,4 +1,4 @@
-(ns genetic-algorithm.random-seq.random-seq
+(ns test-cases.random-seq.random-seq
   (:require [helpers.general-helpers :as g]))
 
 (def rand-gen (g/new-rand-gen))

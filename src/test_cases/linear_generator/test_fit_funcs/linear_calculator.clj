@@ -1,7 +1,7 @@
-(ns genetic-algorithm.test-fit-funcs.linear-calculator
+(ns test-cases.linear-generator.test-fit-funcs.linear-calculator
   (:require [genetic-algorithm.fitness-function :as ff]
-            [genetic-algorithm.test-fit-funcs.helpers :as ffh]
-            [linear-generator.syntax-macro :as fsm]))
+            [test-cases.linear-generator.test-fit-funcs.helpers :as ffh]
+            [test-cases.linear-generator.syntax-macro :as fsm]))
 
 "A calculator company produces a scientific calculator and a graphing calculator. Long-term projections indicate an expected demand of at least 100 scientific and 80 graphing calculators each day. Because of limitations on production capacity, no more than 200 scientific and 170 graphing calculators can be made daily. To satisfy a shipping contract, a total of at least 200 calculators much be shipped each day.
 

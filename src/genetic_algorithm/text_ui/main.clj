@@ -7,12 +7,9 @@
             [genetic-algorithm.fitness-function :as ff]
             [genetic-algorithm.gene-f-helpers :as geh]
 
-            [linear-generator.syntax-macro :as fsm]
+            [test-cases.primes.sorted-primes :as sp]
 
-            [magic-square.ga :as msf]
-            [genetic-algorithm.test-fit-funcs.linear-rabbits :as lafflr]
-            [genetic-algorithm.test-fit-funcs.linear-calculator :as lafflc]
-            [genetic-algorithm.random-seq.random-seq :as rs]))
+            [test-cases.random-seq.random-seq :as rs]))
 
 (def global-rand-gen (g/new-rand-gen))
 
@@ -58,29 +55,19 @@
   (let [good-args (parse-args args)]
     good-args))
 
-(def target-coll ())
-
 (def test-settings
   (gs/map->Settings {:mutate-chance   0.7
                      :cross-chance    0.3
-                     :gene-f          (geh/long-range-gen 0 rs/t-max global-rand-gen)
+                     :gene-f          (geh/long-range-gen 0 1e6 global-rand-gen)
                      :keep-perc       0.1
                      :sort-f          <
-                     :pop-size        5000
-                     :sequence-length rs/seq-length
-                     :fitness-f       (ff/fit-func true rs/fit-func)}))
+                     :pop-size        200
+                     :sequence-length 10
+                     :fitness-f       (ff/fit-func true sp/fitness-f)}))
 
 (def test-pop (jp/population-of test-settings))
 
 (defn test-proc []
   (first
     (main-procedure test-pop test-settings
-                    100 9e99 5e8 global-rand-gen)))
-
-(def parsed-JSON {:id "05d8d404-b3f6-46d1-a0f9-dbdab7e0261f",
-                  :date {:date "2015-01-10T19:11:41.000Z"},
-                  :total {:GBP 57.45}})
-
-(defn filter-by-date [date jsons]
-  (filter #(s/starts-with? (get-in % [:date :date]) date)
-          jsons))
+                    1 9e99 5e8 global-rand-gen)))

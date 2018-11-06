@@ -1,4 +1,4 @@
-(ns linear-generator.fit-func-generator)
+(ns test-cases.linear-generator.fit-func-generator)
 
 (defn range-error
   "Returns how out of bounds n is from [c-min c-max]. Bounds are inclusive.

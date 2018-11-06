@@ -1,4 +1,4 @@
-(ns magic-square.magic-square
+(ns test-cases.magic-square.magic-square
   (:require [helpers.general-helpers :as g]))
 
 (defn- =?
